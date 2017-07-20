@@ -23,7 +23,9 @@ int main(int argc, char **argv) {
     Buffer<int32_t> output(size);
 
     Func f = fibonacci(size);
-    f.realize(output);
+    Target target = get_host_target();
+    target.set_feature(Target::ApplyPolyhedralModel);
+    f.realize(output, target);
 
     printf("Success!\n");
     return 0;

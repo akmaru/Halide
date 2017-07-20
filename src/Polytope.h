@@ -28,6 +28,8 @@ struct PolytopeDomain {
     std::vector<Domain> domain;
 
     inline size_t size() const { return domain.size(); }
+    bool include(const std::string& loopvar) const;
+
     void update_for(const For *op);
     void downdate_for(const For *op);
 };
@@ -39,6 +41,8 @@ struct PolytopeSchedule {
     std::vector<Expr> schedule = {0};
 
     inline size_t size() const { return schedule.size(); }
+    size_t get_index(const std::string& var) const;
+
     void update_stmt();
     void update_for(const For *op);
     void downdate_for(const For *op);
@@ -176,6 +180,7 @@ private:
 public:
     void compute_polytope(Stmt s);
     void compute_dependency();
+    std::vector<std::shared_ptr<DependencyPolyhedra> > get_dependencies(const std::string& loopvar) const;
     friend std::ostream& operator<<(std::ostream& stream, const Polytope& c);
 };
 

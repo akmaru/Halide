@@ -8,6 +8,7 @@
 #include "AddImageChecks.h"
 #include "AddParameterChecks.h"
 #include "AllocationBoundsInference.h"
+#include "AutoParallelize.h"
 #include "Bounds.h"
 #include "BoundsInference.h"
 #include "CSE.h"
@@ -199,11 +200,18 @@ Module lower(const vector<Function> &output_funcs, const string &pipeline_name, 
     s = split_tuples(s, env);
     debug(2) << "Lowering after destructuring tuple-valued realizations:\n" << s << "\n\n";
 
-    debug(1) << "Building poiyhedral models...\n";
-    Polytope poly;
-    poly.compute_polytope(s);
-    poly.compute_dependency();
-    debug(1) << poly << "\n\n";
+    if (t.has_feature(Target::ApplyPolyhedralModel)) {
+        debug(1) << "Building poiyhedral models...\n";
+        Polytope poly;
+        poly.compute_polytope(s);
+        poly.compute_dependency();
+        debug(1) << poly << "\n\n";
+
+        debug(1) << "Auto parallelization using polyhedral model...\n";
+        s = auto_parallelize(s, poly);
+        debug(2) << "Lowering aftee auto parallelization using polyhedral model:\n" << s << "\n\n";
+
+    }
 
     if (t.has_feature(Target::OpenGL)) {
         debug(1) << "Injecting image intrinsics...\n";

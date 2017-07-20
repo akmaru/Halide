@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <map>
+#include <string>
 #include <vector>
 
 #include "FindVariable.h"
@@ -20,6 +21,17 @@ std::ostream& operator<<(std::ostream& stream, const Domain& domain)
     return stream;
 }
 
+
+bool PolytopeDomain::include(const std::string& loopvar) const
+{
+    for (size_t i=0; i<domain.size(); i++) {
+        if (domain[i].var == loopvar) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 void PolytopeDomain::update_for(const For *op)
 {
@@ -46,6 +58,19 @@ std::ostream& operator<<(std::ostream& stream, const PolytopeDomain& domain)
     return stream;
 }
 
+
+size_t PolytopeSchedule::get_index(const std::string& var) const
+{
+    for (size_t i=0; i<schedule.size(); i++) {
+        const Variable* v = schedule[i].as<Variable>();
+
+        if (v != nullptr && v->name == var) {
+            return i;
+        }
+    }
+
+    return -1;
+}
 
 void PolytopeSchedule::update_stmt()
 {
@@ -544,6 +569,20 @@ void Polytope::compute_dependency()
         }
     }
 }
+
+std::vector<std::shared_ptr<DependencyPolyhedra> > Polytope::get_dependencies(const std::string& loopvar) const
+{
+    std::vector<std::shared_ptr<DependencyPolyhedra> > rets;
+
+    for (const auto& dep : deps_) {
+        if (dep->source->domain.include(loopvar) && dep->target->domain.include(loopvar)) {
+            rets.push_back(dep);
+        }
+    }
+
+    return rets;
+}
+
 
 std::ostream& operator<<(std::ostream& stream, const Polytope& poly)
 {

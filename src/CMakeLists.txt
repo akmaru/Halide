@@ -259,6 +259,7 @@ set(HEADER_FILES
   Argument.h
   AssociativeOpsTable.h
   Associativity.h
+  AutoParallelize.h
   BoundaryConditions.h
   Bounds.h
   BoundsInference.h
@@ -413,6 +414,7 @@ add_library(Halide ${HALIDE_LIBRARY_TYPE}
   ApplySplit.cpp
   AssociativeOpsTable.cpp
   Associativity.cpp
+  AutoParallelize.cpp
   BoundaryConditions.cpp
   Bounds.cpp
   BoundsInference.cpp
