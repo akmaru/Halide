@@ -300,6 +300,7 @@ set(HEADER_FILES
   Extern.h
   FastIntegerDivide.h
   FindCalls.h
+  FindVariable.h
   Float16.h
   Func.h
   Function.h
@@ -347,6 +348,7 @@ set(HEADER_FILES
   Parameter.h
   PartitionLoops.h
   Pipeline.h
+  Polytope.h
   Prefetch.h
   Profiling.h
   Qualify.h
@@ -449,6 +451,7 @@ add_library(Halide ${HALIDE_LIBRARY_TYPE}
   Error.cpp
   FastIntegerDivide.cpp
   FindCalls.cpp
+  FindVariable.cpp
   Float16.cpp
   Func.cpp
   Function.cpp
@@ -491,6 +494,7 @@ add_library(Halide ${HALIDE_LIBRARY_TYPE}
   Parameter.cpp
   PartitionLoops.cpp
   Pipeline.cpp
+  Polytope.cpp
   PrintLoopNest.cpp
   Prefetch.cpp
   Profiling.cpp

@@ -35,6 +35,7 @@
 #include "LoopCarry.h"
 #include "Memoization.h"
 #include "PartitionLoops.h"
+#include "Polytope.h"
 #include "Prefetch.h"
 #include "Profiling.h"
 #include "Qualify.h"
@@ -197,6 +198,12 @@ Module lower(const vector<Function> &output_funcs, const string &pipeline_name, 
     debug(1) << "Destructuring tuple-valued realizations...\n";
     s = split_tuples(s, env);
     debug(2) << "Lowering after destructuring tuple-valued realizations:\n" << s << "\n\n";
+
+    debug(1) << "Building poiyhedral models...\n";
+    Polytope poly;
+    poly.compute_polytope(s);
+    poly.compute_dependency();
+    debug(1) << poly << "\n\n";
 
     if (t.has_feature(Target::OpenGL)) {
         debug(1) << "Injecting image intrinsics...\n";
