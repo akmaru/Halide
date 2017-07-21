@@ -7,14 +7,14 @@ using namespace Halide;
 
 Func fibonacci(int32_t size)
 {
-        Var x("x");
-        RDom r(2, size-2);
-        Func f("f");
+    Var x("x");
+    RDom r(2, size-2);
+    Func f("f");
 
-        f(x) = x;
-        f(r.x) = f(r.x-2) + f(r.x-1);
+    f(x) = x;
+    f(r.x) = f(r.x-2) + f(r.x-1);
 
-        return f;
+    return f;
 }
 
 int main(int argc, char **argv) {
