@@ -415,31 +415,29 @@ std::ostream& operator<<(std::ostream& stream, const DependencyPolyhedra& dep)
     p.print_list(dep.target->args);
     stream << ") : (";
 
-              for (size_t i=0; i<dep.directions.size(); i++) {
-                  std::string dir_str;
-                  switch(dep.directions[i]) {
-                  case DependencyPolyhedra::Direction::Equal:
-                      dir_str = "=,";
-                      break;
-                  case DependencyPolyhedra::Direction::Less:
-                      dir_str = "-";
-                      break;
-                  case DependencyPolyhedra::Direction::Greater:
-                      dir_str = "+";
-                      break;
-                  case DependencyPolyhedra::Direction::Unknown:
-                      dir_str = "*";
-                      break;
-                  default:
-                      ;
-                  }
+    for (size_t i=0; i<dep.directions.size(); i++) {
+        std::string dir_str;
+        switch(dep.directions[i]) {
+        case DependencyPolyhedra::Direction::Equal:
+            dir_str = "=,";
+            break;
+        case DependencyPolyhedra::Direction::Less:
+            dir_str = "-";
+            break;
+        case DependencyPolyhedra::Direction::Greater:
+            dir_str = "+";
+            break;
+        case DependencyPolyhedra::Direction::Unknown:
+            dir_str = "*";
+            break;
+        default:
+            ;
+        }
 
-                  stream << dir_str << ", ";
-              }
+        stream << dir_str << ", ";
+    }
 
-                                       stream << ") : ( ";
-                                           p.print_list(dep.iter_replacement);
-                                       stream << ")\n";
+    stream << ")\n";
 
     return stream;
 }

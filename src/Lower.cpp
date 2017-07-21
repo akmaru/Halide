@@ -209,7 +209,7 @@ Module lower(const vector<Function> &output_funcs, const string &pipeline_name, 
 
         debug(1) << "Auto parallelization using polyhedral model...\n";
         s = auto_parallelize(s, poly);
-        debug(2) << "Lowering aftee auto parallelization using polyhedral model:\n" << s << "\n\n";
+        debug(2) << "Lowering after auto parallelization using polyhedral model:\n" << s << "\n\n";
 
     }
 
