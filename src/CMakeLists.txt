@@ -357,6 +357,7 @@ set(HEADER_FILES
   Random.h
   RealizationOrder.h
   Reduction.h
+  RemoveAsserts.h
   RemoveDeadAllocations.h
   RemoveTrivialForLoops.h
   RemoveUndef.h
@@ -505,6 +506,7 @@ add_library(Halide ${HALIDE_LIBRARY_TYPE}
   Random.cpp
   RealizationOrder.cpp
   Reduction.cpp
+  RemoveAsserts.cpp
   RemoveDeadAllocations.cpp
   RemoveTrivialForLoops.cpp
   RemoveUndef.cpp

@@ -163,10 +163,10 @@ int dynamic_shared_test() {
 }
 
 int main(int argc, char **argv) {
-    if (!get_jit_target_from_environment().has_gpu_feature()) {
-        printf("Not running test because no gpu target enabled\n");
-        return 0;
-    }
+    // if (!get_jit_target_from_environment().has_gpu_feature()) {
+    //     printf("Not running test because no gpu target enabled\n");
+    //     return 0;
+    // }
 
     printf("Running multi thread_ype test!\n");
     if (multi_thread_ype_test() != 0) {

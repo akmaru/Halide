@@ -228,7 +228,7 @@ std::ostream& operator<<(std::ostream& stream, const StmtPoly& stmt)
             const auto& provide = stmt.provides[i];
             stream << stmt.indents() << "    " << provide->name << " := (";
             p.print_list(provide->args);
-            stream << ") :(";
+            stream << ") : (";
             p.print_list(provide->arg_items);
             stream << ")\n";
         }
@@ -241,7 +241,7 @@ std::ostream& operator<<(std::ostream& stream, const StmtPoly& stmt)
             const auto& call = stmt.calls[i];
             stream << stmt.indents() << "    " << call->name << " := (";
             p.print_list(call->args);
-            stream << ") : ( ";
+            stream << ") : (";
             p.print_list(call->arg_items);
             stream << ")\n";
         }
@@ -419,7 +419,7 @@ std::ostream& operator<<(std::ostream& stream, const DependencyPolyhedra& dep)
         std::string dir_str;
         switch(dep.directions[i]) {
         case DependencyPolyhedra::Direction::Equal:
-            dir_str = "=,";
+            dir_str = "=";
             break;
         case DependencyPolyhedra::Direction::Less:
             dir_str = "-";
@@ -434,7 +434,11 @@ std::ostream& operator<<(std::ostream& stream, const DependencyPolyhedra& dep)
             ;
         }
 
-        stream << dir_str << ", ";
+        stream << dir_str;
+
+        if (i < dep.directions.size() - 1) {
+            stream << ", ";
+        }
     }
 
     stream << ")\n";

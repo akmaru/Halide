@@ -41,6 +41,7 @@
 #include "Profiling.h"
 #include "Qualify.h"
 #include "RealizationOrder.h"
+#include "RemoveAsserts.h"
 #include "RemoveDeadAllocations.h"
 #include "RemoveTrivialForLoops.h"
 #include "RemoveUndef.h"
@@ -201,7 +202,7 @@ Module lower(const vector<Function> &output_funcs, const string &pipeline_name, 
     debug(2) << "Lowering after destructuring tuple-valued realizations:\n" << s << "\n\n";
 
     if (t.has_feature(Target::ApplyPolyhedralModel)) {
-        debug(1) << "Building poiyhedral models...\n";
+        debug(1) << "Building polyhedral models...\n";
         Polytope poly;
         poly.compute_polytope(s);
         poly.compute_dependency();
@@ -323,6 +324,12 @@ Module lower(const vector<Function> &output_funcs, const string &pipeline_name, 
         s = setup_gpu_vertex_buffer(s);
         debug(2) << "Lowering after removing varying attributes:\n" << s << "\n\n";
     }
+
+//    if (t.has_feature(Target::NoAsserts)) {
+        debug(1) << "Remove asserts...\n";
+        s = remove_asserts(s);
+        debug(2) << "Lowering after remove asserts:\n" << s << "\n\n";
+//    }
 
     s = remove_dead_allocations(s);
     s = remove_trivial_for_loops(s);
